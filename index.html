@@ -1,29 +1,50 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Importação das fontes do Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Importação do arquivo CSS -->
+    <link rel="stylesheet" href="style.css">
+    
     <title>Jogo do Número Secreto</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Importa o arquivo CSS -->
 </head>
 <body>
-    <h1>Jogo do número secreto</h1>
-    <p>Escolha um número entre 1 e 1000</p>
+    <div class="container">
+        <div class="container__conteudo">
+            <div class="container__informacoes">
+                <h1>Hora do Desafio</h1>
+                
+                <p class="texto__paragrafo">Escolha um número entre 1 e 1000</p>
+                    
+                <!-- Mensagem de feedback ao jogador -->
+                <p id="mensagem-feedback" aria-live="polite"></p>
 
-    <!-- Campo para o jogador digitar um número -->
-    <input type="number" id="inputChute" placeholder="Digite seu palpite">
-    <!-- Botão para enviar o palpite -->
-    <button onclick="verificarChute()">Enviar</button>
-    <!-- Botão para reiniciar o jogo, inicialmente desativado -->
-    <button id="reiniciar" onclick="reiniciarJogo()" disabled>Reiniciar</button>
-
-    <!-- Seção para exibir o histórico de tentativas -->
-    <div class="container__informacoes">
-        <h2>Histórico de chutes</h2>
-        <div class="historico"></div>
+                <!-- Caixa de entrada para o palpite -->
+                <input type="number" id="chute" min="1" max="1000" class="container__input" placeholder="Digite seu palpite" aria-label="Digite seu número de palpite">
+                    
+                <!-- Botões de ação -->
+                <div class="container__botoes">
+                    <button onclick="verificarChute()" class="container__botao">Chutar</button>
+                    <!-- Botão de reiniciar com ID -->
+                    <button id="reiniciarButton" class="container__botao">Reiniciar</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Importa o script JavaScript -->
-    <script src="script.js"></script>
+    <!-- Rodapé -->
+    <footer class="rodape">
+        <p>Desenvolvido por Arley Ribeiro da Silva Xavier</p>
+        <p>Este projeto faz parte do programa Oracle Next Education</p>
+    </footer>
+
+    <!-- Importação do JavaScript -->
+    <script src="app.js" defer></script>
 </body>
 </html>

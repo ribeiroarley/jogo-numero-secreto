@@ -1,124 +1,92 @@
-// Aguarda o carregamento da página para exibir a mensagem inicial
-document.addEventListener('DOMContentLoaded', function () {
-    exibirMensagemInicial();
+document.addEventListener('DOMContentLoaded', () => {
+    const titulo = document.querySelector('h1');
+    titulo.innerHTML = 'Hora do Desafio';
 });
 
-// Variáveis globais
-let listaDeNumerosSorteados = []; // Lista para evitar repetição de números
-let numeroLimite = 1000; // Define o limite do número
-let numeroSecreto = gerarNumeroAleatorio(); // Gera o primeiro número secreto
-let tentativas = 1; // Contador de tentativas do jogador
+function exibirTextoNaTela(seletor, texto) {
+    const campo = document.querySelector(seletor);
+    campo.innerHTML = texto;
+}
 
-// Função para gerar um número aleatório sem repetir
+let listaDeNumerosSorteados = [];
+const numeroLimite = 1000;
+let numeroSecreto = gerarNumeroAleatorio();
+let tentativas = 1;
+
 function gerarNumeroAleatorio() {
     let numeroEscolhido;
+    const quantidadeDeElementosNaLista = listaDeNumerosSorteados.length;
 
-    // Se todos os números já foram sorteados, reinicia a lista
-    if (listaDeNumerosSorteados.length == numeroLimite) {
+    // Reinicia a lista se todos os números já foram sorteados
+    if (quantidadeDeElementosNaLista === numeroLimite) {
         listaDeNumerosSorteados = [];
     }
 
-    // Gera um número que ainda não foi sorteado
     do {
         numeroEscolhido = Math.floor(Math.random() * numeroLimite) + 1;
     } while (listaDeNumerosSorteados.includes(numeroEscolhido));
 
-    // Adiciona o número à lista de sorteados
     listaDeNumerosSorteados.push(numeroEscolhido);
-    console.log(listaDeNumerosSorteados); // Exibe os números sorteados no console para depuração
     return numeroEscolhido;
 }
 
-// Função para verificar o palpite do usuário
 function verificarChute() {
-    let chute = document.querySelector('#inputChute').value;
-    let historico = document.querySelector('.historico');
+    const chute = document.querySelector('input').value;
 
-    // Verifica se a entrada é válida
-    if (isNaN(chute) || chute.trim() === '') {
-        alert('Digite um número válido!');
+    // Verifica se o chute é válido
+    if (chute < 1 || chute > 1000 || isNaN(chute)) {
+        alert('Por favor, insira um número válido entre 1 e 1000.');
+        limparCampo();
         return;
     }
 
-    chute = parseInt(chute); // Converte a entrada para número
-
-    // Se o usuário acertou o número secreto
-    if (chute === numeroSecreto) {
-        exibirTextoNaTela('h1', 'Acertou!');
-        let palavraTentativa = tentativas > 1 ? 'tentativas' : 'tentativa';
-        let mensagemTentativas = `Você descobriu o número secreto com ${tentativas} ${palavraTentativa}!`;
-        exibirTextoNaTela('p', mensagemTentativas);
-
-        // Ativa o botão de reinício e muda o fundo para verde
-        document.getElementById('reiniciar').removeAttribute('disabled');
-        document.body.style.backgroundColor = 'green';
-    } else {
-        // Se o chute for maior ou menor que o número secreto
-        if (chute > numeroSecreto) {
-            exibirTextoNaTela('p', 'O número secreto é menor');
-        } else {
-            exibirTextoNaTela('p', 'O número secreto é maior');
-        }
-        tentativas++; // Aumenta o contador de tentativas
-        limparCampo(); // Limpa o campo de entrada
-
-        // Adiciona o chute ao histórico
-        let lista = historico.querySelector('ul');
-        if (!lista) {
-            lista = document.createElement('ul');
-            historico.appendChild(lista);
-        }
+    if (chute == numeroSecreto) {
+        const palavraTentativa = tentativas > 1 ? 'tentativas' : 'tentativa';
+        const mensagemTentativas = `Parabéns! Você acertou o número secreto com ${tentativas} ${palavraTentativa}!`;
         
-        let item = document.createElement('li');
-        item.textContent = `Chute: ${chute}`;
-        lista.appendChild(item);
-
-        // Altera a cor de fundo para vermelho
-        document.body.style.backgroundColor = 'red';
-    }
-}
-
-// Função para exibir mensagens na tela e ativar a leitura por voz
-function exibirTextoNaTela(seletor, texto) {
-    let campo = document.querySelector(seletor);
-    campo.innerHTML = texto;
-
-    // Se o navegador suporta leitura por voz
-    if ('speechSynthesis' in window) {
-        let utterance = new SpeechSynthesisUtterance(texto);
-        utterance.lang = 'pt-BR';
-        utterance.rate = 1.2;
-        window.speechSynthesis.speak(utterance);
+        // Exibe a mensagem de vitória e tentativas no parágrafo de feedback
+        exibirTextoNaTela('#mensagem-feedback', mensagemTentativas);
+        
+        // Não reiniciar imediatamente após acerto
+        setTimeout(() => {
+            reiniciarJogo();
+        }, 15000);  // Aguarda 15 segundos para exibir a mensagem de sucesso antes de reiniciar
     } else {
-        console.log("Web Speech API não suportada neste navegador.");
+        // Dicas para o usuário
+        exibirTextoNaTela('#mensagem-feedback', chute > numeroSecreto ? 'O número secreto é menor' : 'O número secreto é maior');
+        tentativas++;
+        limparCampo();
     }
 }
 
-// Função para limpar o campo de entrada
 function limparCampo() {
-    document.querySelector('#inputChute').value = '';
+    const chute = document.querySelector('input');
+    chute.value = '';
 }
 
-// Exibe a mensagem inicial do jogo
 function exibirMensagemInicial() {
     exibirTextoNaTela('h1', 'Jogo do número secreto');
     exibirTextoNaTela('p', 'Escolha um número entre 1 e 1000');
+    
+    // Limpa a mensagem de feedback quando o jogo é reiniciado
+    exibirTextoNaTela('#mensagem-feedback', '');
 }
 
-// Função para reiniciar o jogo
 function reiniciarJogo() {
-    numeroSecreto = gerarNumeroAleatorio(); // Gera um novo número
-    limparCampo();
+    numeroSecreto = gerarNumeroAleatorio();
     tentativas = 1;
     exibirMensagemInicial();
-
-    // Desativa o botão de reinício e volta a cor do fundo ao normal
-    document.getElementById('reiniciar').setAttribute('disabled', true);
-    document.body.style.backgroundColor = '';
-
-    // Limpa o histórico de chutes
-    let historico = document.querySelector('.historico ul');
-    if (historico) {
-        historico.innerHTML = '';
-    }
+    limparCampo();
 }
+
+exibirMensagemInicial();
+
+// Manipulação do evento Enter para verificar o chute
+document.querySelector('input').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        verificarChute();
+    }
+});
+
+// Evento de clique para reiniciar o jogo
+document.querySelector('#reiniciarButton').addEventListener('click', reiniciarJogo);

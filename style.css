@@ -1,3 +1,4 @@
+/* Reset de estilo global para garantir consistência entre os navegadores */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,17 +7,22 @@
 }
 
 body {
+    /* Gradiente de fundo com cores no estilo escuro, criando um ambiente imersivo */
     background: linear-gradient(#1354A5 0%, #041832 33.33%, #041832 66.67%, #01080E 100%);
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden; /* Evitar rolagem */
 }
 
 body::before {
+    /* Imagem de fundo com um leve desfoque para não interferir com o conteúdo */
     background-image: url("img/code.png");
     background-repeat: no-repeat;
-    background-position: right;
+    background-position: center;
+    background-size: cover;
     content: "";
     display: block;
     position: absolute;
@@ -26,36 +32,32 @@ body::before {
 }
 
 .container {
-    width: 80%;
-    height: 80%;
+    /* Contêiner centralizado, com borda arredondada e sombras */
+    width: 90%;
+    max-width: 600px;
+    height: auto;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center; /* Centralizar itens horizontalmente */
     border-radius: 24px;
     border: 1px solid #1875E8;
     box-shadow: 4px 4px 20px 0px rgba(1, 8, 14, 0.15);
     background-image: url("img/Ruido.png");
-    background-size: 100% 100%;
+    background-size: cover;
     position: relative;
-    padding: 3rem;
-}
-
-.container__conteudo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    padding: 2rem; /* Adicionar padding para espaçamento interno */
 }
 
 .container__informacoes {
-    flex: 1;
-    text-align: center;
+    /* Espaçamento interno para as informações do jogo */
+    text-align: center; /* Centralizar texto */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .container__botao {
+    /* Estilo do botão com bordas arredondadas e destaque visual */
     border-radius: 16px;
     background: #1875E8;
     padding: 16px 24px;
@@ -63,11 +65,13 @@ body::before {
     font-size: 24px;
     font-weight: 700;
     border: none;
-    margin-top: 2rem;
+    margin-top: 1rem;
+    cursor: pointer; /* Garantir que o botão pareça clicável */
 }
 
+/* Estilo para o título e os textos */
 .container__texto {
-    margin: 16px 0 16px 0;
+    margin: 16px 0;
 }
 
 .container__texto-azul {
@@ -75,6 +79,7 @@ body::before {
 }
 
 .container__input {
+    /* Estilo do campo de input para o chute do número */
     width: 100%;
     height: 72px;
     border-radius: 16px;
@@ -85,20 +90,25 @@ body::before {
     font-size: 24px;
     font-weight: 700;
     font-family: 'Inter', sans-serif;
-    margin-bottom: 1rem;
+    margin-bottom: 1rem; /* Espaçamento entre o input e os botões */
+    margin-top: 20px; /* Espaçamento entre a dica e a caixa de input */
+}
+
+#mensagem-feedback {
+    margin-bottom: 20px; /* Aumenta o espaçamento entre a dica e a caixa de palpite */
 }
 
 .container__botoes {
+    /* Alinhamento dos botões de interação */
     display: flex;
-    gap: 2em;
-    justify-content: center;
+    gap: 1rem;
 }
 
+/* Título do jogo */
 h1 {
     font-family: 'Chakra Petch', sans-serif;
-    font-size: 72px;
-    padding-bottom: 3rem;
-    text-align: center;
+    font-size: 48px;
+    padding-bottom: 1rem;
 }
 
 p,
@@ -107,42 +117,61 @@ button {
 }
 
 .texto__paragrafo {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 400;
+    margin-bottom: 1rem; /* Espaçamento entre o parágrafo e a caixa de input */
 }
 
+/* Botões desabilitados com cor de fundo cinza */
 button:disabled {
     background-color: gray;
 }
 
+/* Responsividade: Ajustes para telas menores */
 @media screen and (max-width: 1250px) {
+    .container {
+        flex-direction: column; /* Mudar para coluna em telas menores */
+        height: auto;
+    }
+
     h1 {
-        font-size: 50px;
+        font-size: 36px; /* Tamanho menor do título */
     }
 
     .container__botao {
-        font-size: 16px;
+        font-size: 18px; /* Reduzir o tamanho dos botões */
+        padding: 12px 20px;
     }
 
     .texto__paragrafo {
-        font-size: 24px;
-    }
-
-    .container__imagem-pessoa {
-        display: none;
-    }
-
-    .container__conteudo {
-        display: block;
-        position: inherit;
+        font-size: 20px; /* Reduzir o tamanho da descrição */
     }
 
     .container__informacoes {
-        padding: 1rem;
+        padding: 1rem; /* Reduzir o padding interno */
     }
 }
 
-/* Estilo para o rodapé */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 28px; /* Tamanho menor do título */
+    }
+
+    .container__botao {
+        font-size: 16px; /* Reduzir o tamanho dos botões */
+        padding: 10px 16px;
+    }
+
+    .texto__paragrafo {
+        font-size: 18px; /* Reduzir o tamanho da descrição */
+    }
+
+    .container__informacoes {
+        padding: 0.5rem; /* Reduzir o padding interno */
+    }
+}
+
+/* Estilo do rodapé, fixando no fundo */
 .rodape {
     text-align: center;
     padding: 10px;
@@ -157,4 +186,9 @@ button:disabled {
 
 .rodape p {
     margin: 5px 0;
+}
+
+.container__input:focus, .container__botao:focus {
+    outline: 2px solid #1875E8;
+    outline-offset: 2px;
 }
