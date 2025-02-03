@@ -1,45 +1,29 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Inter:wght@400;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <title>JS Game</title>
+    <title>Jogo do Número Secreto</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Importa o arquivo CSS -->
 </head>
-
 <body>
+    <h1>Jogo do número secreto</h1>
+    <p>Escolha um número entre 1 e 1000</p>
 
-    <div class="container">
-        <div class="container__conteudo">
-            <div class="container__informacoes">
-                <div class="container__texto">
-                    <h1>Jogo do número secreto</h1>
-                    <p class="texto__paragrafo">Escolha um número entre 1 e 1000</p>
-                </div>
-                <input type="number" min="1" max="1000" class="container__input">
-                <div class="chute container__botoes">
-                    <button onclick="verificarChute()" class="container__botao">Chutar</button>
-                    <button onclick="reiniciarJogo()" id="reiniciar" class="container__botao" disabled>Novo jogo</button>
-                </div>
-            </div>
-            <!-- Atualizando o caminho e a descrição da imagem -->
-            <img src="./img/arsx.png" alt="Imagem do Arley" class="container__imagem-pessoa" />
-        </div>
+    <!-- Campo para o jogador digitar um número -->
+    <input type="number" id="inputChute" placeholder="Digite seu palpite">
+    <!-- Botão para enviar o palpite -->
+    <button onclick="verificarChute()">Enviar</button>
+    <!-- Botão para reiniciar o jogo, inicialmente desativado -->
+    <button id="reiniciar" onclick="reiniciarJogo()" disabled>Reiniciar</button>
+
+    <!-- Seção para exibir o histórico de tentativas -->
+    <div class="container__informacoes">
+        <h2>Histórico de chutes</h2>
+        <div class="historico"></div>
     </div>
 
-    <!-- Adicionando o rodapé -->
-    <footer class="rodape">
-        <p>Desenvolvido por Arley Ribeiro da Silva Xavier</p>
-        <p>Iniciante em Programação G8 - ONE</p>
-        <p>Esta formação faz parte do programa ONE, parceria de Alura + Oracle</p>
-    </footer>
-
-    <script src="app.js" defer></script>
+    <!-- Importa o script JavaScript -->
+    <script src="script.js"></script>
 </body>
-
 </html>
